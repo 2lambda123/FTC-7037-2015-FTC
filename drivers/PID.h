@@ -18,34 +18,34 @@ int Tolerance =5;//how close is close enough?
 #define min_out -100//^^^^^^^^^^^^
 float PID(float setpoint,float ProcessValue)
 {
-	static float init_error= 0;
-	static float integral=0;
-	float error;
-	float derivative;
-	float PIDoutput;
+    static float init_error= 0;
+    static float integral=0;
+    float error;
+    float derivative;
+    float PIDoutput;
 //Caculate P
-		error = setpoint -ProcessValue;
-		//stop integration if error too smal
-		if(abs(error)> Tolerance)
-		{
+    error = setpoint -ProcessValue;
+    //stop integration if error too smal
+    if(abs(error)> Tolerance)
+    {
 //Calculate I
-		integral =integral+ error*dt;
-		}
+        integral =integral+ error*dt;
+    }
 //Calculate D
-		derivative= (error -init_error)/dt;
+    derivative= (error -init_error)/dt;
 //COMPUTE PID
-		PIDoutput=Kp*error + Ki*integral + Kd*derivative;
-		//limits the Range of PIDoutput to ensure not out of range
-		if(PIDoutput< min_out)
-		{
-		PIDoutput= min_out;
-		}
-		else if(PIDoutput> max_out)
-		{
-		PIDoutput= max_out;
-		}
-	//Update error, this program has to be run in a loop so that error can be corected over time
-	init_error= error;
-	return PIDoutput;
+    PIDoutput=Kp*error + Ki*integral + Kd*derivative;
+    //limits the Range of PIDoutput to ensure not out of range
+    if(PIDoutput< min_out)
+    {
+        PIDoutput= min_out;
+    }
+    else if(PIDoutput> max_out)
+    {
+        PIDoutput= max_out;
+    }
+    //Update error, this program has to be run in a loop so that error can be corected over time
+    init_error= error;
+    return PIDoutput;
 }
 #endif PID_H_

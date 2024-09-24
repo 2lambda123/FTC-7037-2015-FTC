@@ -26,81 +26,81 @@ bool SwitchState =false;//initialize switchstate as false
 
 void RunLift(short nStage)
 {
-	int inputdata = HTSPBreadADC(HTSPB, 0, 10);
-	//the first time in a program this is called, initialize the lift
-	if(hasbeeninit==0)	//initialize the lift
-	{
+    int inputdata = HTSPBreadADC(HTSPB, 0, 10);
+    //the first time in a program this is called, initialize the lift
+    if(hasbeeninit==0)	//initialize the lift
+    {
 //initialize the lift
-		motor[Lift]=100;
-		wait1Msec(500);
-		motor[Lift]=0;
-		while(true)
-		{
-			//check switch state
-			int inputdata = HTSPBreadADC(HTSPB, 0, 10);//refreshed per cycle.
-	    SwitchState = (int)inputdata >512;//boolean algebra.
+        motor[Lift]=100;
+        wait1Msec(500);
+        motor[Lift]=0;
+        while(true)
+        {
+            //check switch state
+            int inputdata = HTSPBreadADC(HTSPB, 0, 10);//refreshed per cycle.
+            SwitchState = (int)inputdata >512;//boolean algebra.
 
-	    if(inputdata==-1)//this is the fault state for the HTSPB reading analog.
-	    {
-	    //report error
-	    writeDebugStreamLine("S4 Fault");
-	    nxtDisplayCenteredBigTextLine(3, "S4 Fault");
-	    break;	//exit the function
-	    }
-	    if(SwitchState==false)//if switch open
-	    {
-	    	//move down until switch is pressed
-	    	motor[Lift]=-20;
-	    	writeDebugStreamLine("STATE:%i",SwitchState);
-	    }
-	    else if(SwitchState==true)// if switch closed
-	    	{
-	    	motor[Lift]=0;
-	    	nMotorEncoder[Lift]=0;
-	    	writeDebugStreamLine("STATE:%i",SwitchState);
-	    	break;//exit and begin PID controll
-	    }
-	 	}
+            if(inputdata==-1)//this is the fault state for the HTSPB reading analog.
+            {
+                //report error
+                writeDebugStreamLine("S4 Fault");
+                nxtDisplayCenteredBigTextLine(3, "S4 Fault");
+                break;	//exit the function
+            }
+            if(SwitchState==false)//if switch open
+            {
+                //move down until switch is pressed
+                motor[Lift]=-20;
+                writeDebugStreamLine("STATE:%i",SwitchState);
+            }
+            else if(SwitchState==true)// if switch closed
+            {
+                motor[Lift]=0;
+                nMotorEncoder[Lift]=0;
+                writeDebugStreamLine("STATE:%i",SwitchState);
+                break;//exit and begin PID controll
+            }
+        }
 //confirm initialization
-		hasbeeninit= -1;//keeps from initializing more than once
-		writeDebugStreamLine("STATE:%i",SwitchState);//reports switch information
-		writeDebugStreamLine("initialization complete");
-	}
-	wait10Msec(100);
+        hasbeeninit= -1;//keeps from initializing more than once
+        writeDebugStreamLine("STATE:%i",SwitchState);//reports switch information
+        writeDebugStreamLine("initialization complete");
+    }
+    wait10Msec(100);
 //determine target for PID
-	float Range=22.5;//mechanical rotations of the motor shaft to extend full length of lift
-	float Stages=4;//number of stages
-	float ppr= 1120;//pulse per revolution for the andymark motor
-	float nTarget=(nStage/Stages)*(Range *ppr);
+    float Range=22.5;//mechanical rotations of the motor shaft to extend full length of lift
+    float Stages=4;//number of stages
+    float ppr= 1120;//pulse per revolution for the andymark motor
+    float nTarget=(nStage/Stages)*(Range *ppr);
 
-	//loop until within tolerance.
-	while(abs(nTarget-nMotorEncoder[Lift])>Tolerance+5)//--TEST added 5 becuase Tolerance to low?
-	{
-		writeDebugStreamLine("Target:%i, status:%i",nTarget, nMotorEncoder[Lift]);
-		motor[Lift]=PID(nTarget,nMotorEncoder[Lift]);
-	}
-	motor[Lift]=0;
+    //loop until within tolerance.
+    while(abs(nTarget-nMotorEncoder[Lift])>Tolerance+5)//--TEST added 5 becuase Tolerance to low?
+    {
+        writeDebugStreamLine("Target:%i, status:%i",nTarget, nMotorEncoder[Lift]);
+        motor[Lift]=PID(nTarget,nMotorEncoder[Lift]);
+    }
+    motor[Lift]=0;
 
 
-	//************************************LOGIC-TEST************************************//
-	//int SIM =0;
-	//while(abs(nTarget-SIM)>Tolerance)
-	//{
-	//	writeDebugStreamLine("Target:%i, status:%i",nTarget, SIM);
-	//	motor[Lift]=PID(nTarget,SIM);
-	//	SIM++;
-	//	SIM++;
-	//	wait1Msec(2);
-	//	clearDebugStream();
-	//}
-	//motor[Lift]=0;
-	//*********************************************************************************//
-	return;
+    //************************************LOGIC-TEST************************************//
+    //int SIM =0;
+    //while(abs(nTarget-SIM)>Tolerance)
+    //{
+    //	writeDebugStreamLine("Target:%i, status:%i",nTarget, SIM);
+    //	motor[Lift]=PID(nTarget,SIM);
+    //	SIM++;
+    //	SIM++;
+    //	wait1Msec(2);
+    //	clearDebugStream();
+    //}
+    //motor[Lift]=0;
+    //*********************************************************************************//
+    return;
 }
 
 task main()
 {
-	RunLift(2);
-	wait10Msec(300);
-	writeDebugStream("Proceedural success")
+    RunLift(2);
+    wait10Msec(300);
+    writeDebugStream("Proceedural success")
 }

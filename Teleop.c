@@ -38,8 +38,8 @@
 
 void initializeRobot()
 {
-	servo[Gripper]=0;
-  return;
+    servo[Gripper]=0;
+    return;
 }
 
 
@@ -72,141 +72,141 @@ void initializeRobot()
 
 task main()
 {
-  initializeRobot();
-  waitForStart();   // wait for start of tele-op phase
-	int threshold = 14;
-  while (true)
-  {
-  //driver 1
-  	//drivetrain
-		if(abs(joystick.joy1_y1)>threshold)
-		{
-		motor[Left]=joystick.joy1_y1;
-		writeDebugStreamLine("Y1: %i", joystick.joy1_y1);
-		}
-		else
-		{
-		motor[Left]=0;
-		}
-		if(abs(joystick.joy1_y2)>threshold)
-		{
-		writeDebugStreamLine("Y2: %i", joystick.joy1_y2);
-		motor[Right]=joystick.joy1_y2;
-		}
-		else
-		{
-		motor[Right]=0;
-		}
-		//Gripper-NC hold to CLOSED
-		if(joy1Btn(8))
-		{
-		writeDebugStreamLine("joy1Btn(8): %i", joy1Btn(8));
-		servo[Gripper]=245;
-		}
-		else
-		{
-		servo[Gripper]=0;
-		}
-		//lock
-		if(joy1Btn(5))
-		{
-			servo[lock]=0;
-		}
-		else if(joy1Btn(7))
-		{
-		servo[lock]=255;
-		}
-		else
-		{
-		servo[lock]=127;
-		}
+    initializeRobot();
+    waitForStart();   // wait for start of tele-op phase
+    int threshold = 14;
+    while (true)
+    {
+        //driver 1
+        //drivetrain
+        if(abs(joystick.joy1_y1)>threshold)
+        {
+            motor[Left]=joystick.joy1_y1;
+            writeDebugStreamLine("Y1: %i", joystick.joy1_y1);
+        }
+        else
+        {
+            motor[Left]=0;
+        }
+        if(abs(joystick.joy1_y2)>threshold)
+        {
+            writeDebugStreamLine("Y2: %i", joystick.joy1_y2);
+            motor[Right]=joystick.joy1_y2;
+        }
+        else
+        {
+            motor[Right]=0;
+        }
+        //Gripper-NC hold to CLOSED
+        if(joy1Btn(8))
+        {
+            writeDebugStreamLine("joy1Btn(8): %i", joy1Btn(8));
+            servo[Gripper]=245;
+        }
+        else
+        {
+            servo[Gripper]=0;
+        }
+        //lock
+        if(joy1Btn(5))
+        {
+            servo[lock]=0;
+        }
+        else if(joy1Btn(7))
+        {
+            servo[lock]=255;
+        }
+        else
+        {
+            servo[lock]=127;
+        }
 // driver 2
-		//intake- right trigger set
-		if(joy2Btn(7))
-		{
-		writeDebugStreamLine("joy2Btn(6): %i", joy2Btn(6));
-		motor[Intake]=80;
-		}
-		else if(joy2Btn(5))
-		{
-		writeDebugStreamLine("joy2Btn(8): %i", joy2Btn(8));
-		motor[Intake]=-80;
-		}
-		else
-		{
-		motor[Intake]=0;
-		}
-		//Conveyor - left trigger set
-		if(joy2Btn(6))
-		{
-		writeDebugStreamLine("joy2Btn(5): %i", joy2Btn(5));
-		motor[Conveyor]=30;
-		}
-		else if(joy2Btn(8))
-		{
-		writeDebugStreamLine("joy2Btn(7): %i", joy2Btn(7));
-		motor[Conveyor]=-30;
-		}
-		else
-		{
-		motor[Conveyor]=0;
-		}
-		//lift--3 up 2 down
-		  int  Lim_base = HTSPBreadADC(HTSPB, 0, 10)>512;//boolean algebra.
-		  int  Lim_top	= HTSPBreadADC(HTSPB, 1, 10)>512;//boolean algebra.
-				if((Lim_top==OPEN && Lim_base==OPEN))//if neither switch is pressed
-				{
-					if(joy2Btn(3))//up
-					{
-						motor[Lift]=100;
-					}
-					else if(joy2Btn(2))//down
-					{
-						motor[Lift]=-100;
-					}
-					else
-					{
-						motor[Lift]=0;
-					}
-				}
-				else if(Lim_top==CLOSED && Lim_base==OPEN)//if top is pressed->CLOSED
-				{
+        //intake- right trigger set
+        if(joy2Btn(7))
+        {
+            writeDebugStreamLine("joy2Btn(6): %i", joy2Btn(6));
+            motor[Intake]=80;
+        }
+        else if(joy2Btn(5))
+        {
+            writeDebugStreamLine("joy2Btn(8): %i", joy2Btn(8));
+            motor[Intake]=-80;
+        }
+        else
+        {
+            motor[Intake]=0;
+        }
+        //Conveyor - left trigger set
+        if(joy2Btn(6))
+        {
+            writeDebugStreamLine("joy2Btn(5): %i", joy2Btn(5));
+            motor[Conveyor]=30;
+        }
+        else if(joy2Btn(8))
+        {
+            writeDebugStreamLine("joy2Btn(7): %i", joy2Btn(7));
+            motor[Conveyor]=-30;
+        }
+        else
+        {
+            motor[Conveyor]=0;
+        }
+        //lift--3 up 2 down
+        int  Lim_base = HTSPBreadADC(HTSPB, 0, 10)>512;//boolean algebra.
+        int  Lim_top	= HTSPBreadADC(HTSPB, 1, 10)>512;//boolean algebra.
+        if((Lim_top==OPEN && Lim_base==OPEN))//if neither switch is pressed
+        {
+            if(joy2Btn(3))//up
+            {
+                motor[Lift]=100;
+            }
+            else if(joy2Btn(2))//down
+            {
+                motor[Lift]=-100;
+            }
+            else
+            {
+                motor[Lift]=0;
+            }
+        }
+        else if(Lim_top==CLOSED && Lim_base==OPEN)//if top is pressed->CLOSED
+        {
 
-					if(joy2Btn(2)) //only down
-					{
-						motor[Lift]=-100;
-					}
-					else
-					{
-						motor[Lift]=0;
-					}
-				}
-				else if(Lim_top==OPEN && Lim_base==CLOSED)//if bottom is pressed->CLOSED
-				{
-					if(joy2Btn(3))//only up
-					{
-						motor[Lift]=100;
-					}
-					else
-					{
-						motor[Lift]=0;
-					}
-				}
-		//hood-- 1 down 4 up
-		if(joy2Btn(1))
-		{
-			writeDebugStreamLine("joy2Btn(1): %i", joy2Btn(1));
-			motor[Hood]=30;
-		}
-		else if(joy2Btn(4))
-		{
-			writeDebugStreamLine("joy2Btn(4): %i", joy2Btn(4));
-			motor[Hood]=-30;
-		}
-		else
-		{
-			motor[Hood]=0;
-		}
-		clearDebugStream();
-	}
+            if(joy2Btn(2)) //only down
+            {
+                motor[Lift]=-100;
+            }
+            else
+            {
+                motor[Lift]=0;
+            }
+        }
+        else if(Lim_top==OPEN && Lim_base==CLOSED)//if bottom is pressed->CLOSED
+        {
+            if(joy2Btn(3))//only up
+            {
+                motor[Lift]=100;
+            }
+            else
+            {
+                motor[Lift]=0;
+            }
+        }
+        //hood-- 1 down 4 up
+        if(joy2Btn(1))
+        {
+            writeDebugStreamLine("joy2Btn(1): %i", joy2Btn(1));
+            motor[Hood]=30;
+        }
+        else if(joy2Btn(4))
+        {
+            writeDebugStreamLine("joy2Btn(4): %i", joy2Btn(4));
+            motor[Hood]=-30;
+        }
+        else
+        {
+            motor[Hood]=0;
+        }
+        clearDebugStream();
+    }
 }

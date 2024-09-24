@@ -17,26 +17,26 @@ void Drive(int distance);
 
 task main()
 {
-	Drive(20);
+    Drive(20);
 }
 
 void Drive(int distance)
 {
-	int C=2*(PI)*2;
-	int Target= (1120/C)*distance;//en/in
-	nMotorEncoder[motorE]=0;
-	nMotorEncoder[motorD]=0;
+    int C=2*(PI)*2;
+    int Target= (1120/C)*distance;//en/in
+    nMotorEncoder[motorE]=0;
+    nMotorEncoder[motorD]=0;
 
-		//motor[Left]= 100;
-		//motor[Right]=100;
-	while(true)
-	{
-	Motor[left]=PID(Target, nMotorEncoder[left]);//set one motor to Target
-		writeDebugStreamLine("PID:%i, Target:%i,	Left:%i,	Right:%i",	PID(Target, nMotorEncoder[Left]),	Target,	-1*nMotorEncoder[Left],	nMotorEncoder[Right]);
-	}
+    //motor[Left]= 100;
+    //motor[Right]=100;
+    while(true)
+    {
+        Motor[left]=PID(Target, nMotorEncoder[left]);//set one motor to Target
+        writeDebugStreamLine("PID:%i, Target:%i,	Left:%i,	Right:%i",	PID(Target, nMotorEncoder[Left]),	Target, -1*nMotorEncoder[Left],	nMotorEncoder[Right]);
+    }
 //Motor[Left]= PID( nMotorEncoder[Right], nMotorEncoder[Left]); //set the other as slave, one encoder will be backward, FIX ME
-		//motor[Right]=PID(Target, nMotorEncoder[Left]);
+    //motor[Right]=PID(Target, nMotorEncoder[Left]);
 
-		writeDebugStreamLine("PID:%i, Target:%i,	Left:%i,	Right:%i",	PID(Target, nMotorEncoder[Left]),	Target,	-1*nMotorEncoder[Left],	nMotorEncoder[Right]);
+    writeDebugStreamLine("PID:%i, Target:%i,	Left:%i,	Right:%i",	PID(Target, nMotorEncoder[Left]),	Target, -1*nMotorEncoder[Left],	nMotorEncoder[Right]);
 
 }

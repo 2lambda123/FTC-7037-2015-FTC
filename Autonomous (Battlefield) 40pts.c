@@ -53,7 +53,7 @@ void BumpConveyor();
 void Test();
 task main()
 {
-	startTask(printf);
+    startTask(printf);
 ////	getUserInput();
 //	initializeRobot();
 //		Drive(-108, 30);
@@ -68,134 +68,134 @@ task main()
 //	wait10Msec(50);
 //	Drive(101, 50);
 //	Turn(-90);
-	Runlift(3);
-	BumpConveyor();
+    Runlift(3);
+    BumpConveyor();
 //	Test();
-	//waitForStart();
-	//locateInfaRedBeacon();//determins GoalPosition
-	//for(int Count=0; Count<3; Count++)
-	//{
-	//	if(GoalPosition==1){
-	//	Routine1();
-	//	break;
-	//	}
-	//	else if(GoalPosition==2){
-	//	Routine2();
-	//	break;
-	//	}
-	//	else if(GoalPosition==3){
-	//	Routine3();
-	//	break;
-	//	}
-	//	else if(GoalPosition==0){
-	//	RoutineERR();
-	//	break;
-	//	}
-	//
+    //waitForStart();
+    //locateInfaRedBeacon();//determins GoalPosition
+    //for(int Count=0; Count<3; Count++)
+    //{
+    //	if(GoalPosition==1){
+    //	Routine1();
+    //	break;
+    //	}
+    //	else if(GoalPosition==2){
+    //	Routine2();
+    //	break;
+    //	}
+    //	else if(GoalPosition==3){
+    //	Routine3();
+    //	break;
+    //	}
+    //	else if(GoalPosition==0){
+    //	RoutineERR();
+    //	break;
+    //	}
+    //
 
-	//	Test();
-	waitForStart();
+    //	Test();
+    waitForStart();
 //	locateInfaRedBeacon();//determins GoalPosition
 
-	/*    hows this for instead of your routine stuffs     -David
+    /*    hows this for instead of your routine stuffs     -David
 
-	int fabulus =0;
+    int fabulus =0;
 
-	while (int fabulus==0)
-  {
-   	if(SensorValue[IRLeft]==5)
-		{
-		Routine1();
-		break;
-		}
-		else
-		{
-		Drive(5);//change number
-		Turn(-45);//change number
-		Drive(5);//change number
-		}
+    while (int fabulus==0)
+    {
+    if(SensorValue[IRLeft]==5)
+    	{
+    	Routine1();
+    	break;
+    	}
+    	else
+    	{
+    	Drive(5);//change number
+    	Turn(-45);//change number
+    	Drive(5);//change number
+    	}
 
-		if(SensorValue[IRLeft]==5)
-		{
-		Routine2();
-		break;
-		}
-		else
-		{
-		Drive(5);//change number
-		Turn(-45);//change number
-		Drive(5);//change number
-		}
+    	if(SensorValue[IRLeft]==5)
+    	{
+    	Routine2();
+    	break;
+    	}
+    	else
+    	{
+    	Drive(5);//change number
+    	Turn(-45);//change number
+    	Drive(5);//change number
+    	}
 
-	if(SensorValue[IRLeft]==5)
-		{
-		Routine3();
-		break;
-		}
-		else
-		{
-		Drive(5);//change number
-		Turn(-45);//change number
-		Drive(5);//change number
-		}
-		int fabulus++;
+    if(SensorValue[IRLeft]==5)
+    	{
+    	Routine3();
+    	break;
+    	}
+    	else
+    	{
+    	Drive(5);//change number
+    	Turn(-45);//change number
+    	Drive(5);//change number
+    	}
+    	int fabulus++;
 
-  }
+    }
 
-	if(SensorValue[IRLeft]==5)
-		{
-		RoutineERR();
-		break;
-		}
-	*/
-
-
+    if(SensorValue[IRLeft]==5)
+    	{
+    	RoutineERR();
+    	break;
+    	}
+    */
 
 
-	for(int Count=0; Count<3; Count++)
-	{
-		if(GoalPosition==1)
-		{
-		Routine1();
-		break;
-		}
 
-		else if(GoalPosition==2)
-		{
-		Routine2();
-		break;
-		}
 
-		else if(GoalPosition==3)
-		{
-		Routine3();
-		break;
-		}
+    for(int Count=0; Count<3; Count++)
+    {
+        if(GoalPosition==1)
+        {
+            Routine1();
+            break;
+        }
 
-		else if(GoalPosition==0)
-		{
-		RoutineERR();
-		break;
-		}
-	}
+        else if(GoalPosition==2)
+        {
+            Routine2();
+            break;
+        }
+
+        else if(GoalPosition==3)
+        {
+            Routine3();
+            break;
+        }
+
+        else if(GoalPosition==0)
+        {
+            RoutineERR();
+            break;
+        }
+    }
 //clearDebugStream();
 }
 
 task printf()
 {
-	while(true)
-	{
-	clearDebugStream();
-	writeDebugStreamLine("startPosition: %s", startPosition);
-	writeDebugStreamLine("startColor:    %s", startColor);
-	writeDebugStreamLine("GoalPosition: %i", GoalPosition);
-	wait10Msec(100);
-	clearDebugStream();
-	}
+    while(true)
+    {
+        clearDebugStream();
+        writeDebugStreamLine("startPosition: %s", startPosition);
+        writeDebugStreamLine("startColor:    %s", startColor);
+        writeDebugStreamLine("GoalPosition: %i", GoalPosition);
+        wait10Msec(100);
+        clearDebugStream();
+    }
 }
 void initializeRobot()
 {
-	servo[Gripper]=80;
+    servo[Gripper]=80;
 }
 //void getUserInput()
 //{
@@ -275,29 +275,29 @@ void RoutineERR()
 void locateInfaRedBeacon()
 {
 //determine start Position(FLOOR = floor, RAMP = ramp)
-	//if(startPosition == START_FLOOR)
-	//{
-	////drive out of start Position and into GoalPosition_1
-	//Drive(40);//change number
-	//Turn(-90);//change number
-	//}
-	//else if(startPosition == START_RAMP)
-	//{
-	////drive out of start Position and into GoalPosition_1
-	//Drive(80);
-	//Turn(-45);
-	//Drive(-50);//change number
-	//Turn(-45);//change number
-	//Drive(-25);//change number
-	//}
+    //if(startPosition == START_FLOOR)
+    //{
+    ////drive out of start Position and into GoalPosition_1
+    //Drive(40);//change number
+    //Turn(-90);//change number
+    //}
+    //else if(startPosition == START_RAMP)
+    //{
+    ////drive out of start Position and into GoalPosition_1
+    //Drive(80);
+    //Turn(-45);
+    //Drive(-50);//change number
+    //Turn(-45);//change number
+    //Drive(-25);//change number
+    //}
 
 //if IR at GoalPosition 1 SET(int GoalPosition =1)and return;
-	if(SensorValue[IRLeft]==5)
-	{
-	GoalPosition=1;
-	return;
-	}
-	RunLift(4);//is this like routine one?  -David
+    if(SensorValue[IRLeft]==5)
+    {
+        GoalPosition=1;
+        return;
+    }
+    RunLift(4);//is this like routine one?  -David
 
 //if IR at GoalPosition 1 SET(int GoalPosition =1)and return;
 //else drive out of GoalPosition1 and into GoalPosition_2
@@ -312,202 +312,202 @@ void locateInfaRedBeacon()
 
 void RunLift(short nStage)
 {
-	int inputdata = HTSPBreadADC(HTSPB, 0, 10);
-	//the first time in a program this is called, initialize the lift
-	if(hasbeeninit==0)	//initialize the lift
-	{
+    int inputdata = HTSPBreadADC(HTSPB, 0, 10);
+    //the first time in a program this is called, initialize the lift
+    if(hasbeeninit==0)	//initialize the lift
+    {
 //initialize the lift
-		motor[Lift]=100;
-		wait1Msec(500);
-		motor[Lift]=0;
-		while(true)
-		{
-			//check switch state
-			int inputdata = HTSPBreadADC(HTSPB, 0, 10);//refreshed per cycle.
-	    SwitchState = (int)inputdata >512;//boolean algebra.
+        motor[Lift]=100;
+        wait1Msec(500);
+        motor[Lift]=0;
+        while(true)
+        {
+            //check switch state
+            int inputdata = HTSPBreadADC(HTSPB, 0, 10);//refreshed per cycle.
+            SwitchState = (int)inputdata >512;//boolean algebra.
 
-	    if(inputdata==-1)//this is the fault state for the HTSPB reading analog.
-	    {
-	    //report error
-	    writeDebugStreamLine("S4 Fault");
-	    nxtDisplayCenteredBigTextLine(3, "S4 Fault");
-	    break;	//exit the function
-	    }
-	    if(SwitchState==false)//if switch open
-	    {
-	    	//move down until switch is pressed
-	    	motor[Lift]=-20;
-	    	writeDebugStreamLine("STATE:%i",SwitchState);
-	    }
-	    else if(SwitchState==true)// if switch closed
-	    	{
-	    	motor[Lift]=0;
-	    	nMotorEncoder[Lift]=0;
-	    	writeDebugStreamLine("STATE:%i",SwitchState);
-	    	break;//exit and begin PID controll
-	    }
-	 	}
+            if(inputdata==-1)//this is the fault state for the HTSPB reading analog.
+            {
+                //report error
+                writeDebugStreamLine("S4 Fault");
+                nxtDisplayCenteredBigTextLine(3, "S4 Fault");
+                break;	//exit the function
+            }
+            if(SwitchState==false)//if switch open
+            {
+                //move down until switch is pressed
+                motor[Lift]=-20;
+                writeDebugStreamLine("STATE:%i",SwitchState);
+            }
+            else if(SwitchState==true)// if switch closed
+            {
+                motor[Lift]=0;
+                nMotorEncoder[Lift]=0;
+                writeDebugStreamLine("STATE:%i",SwitchState);
+                break;//exit and begin PID controll
+            }
+        }
 //confirm initialization
-		hasbeeninit= -1;//keeps from initializing more than once
-		writeDebugStreamLine("STATE:%i",SwitchState);//reports switch information
-		writeDebugStreamLine("initialization complete");
-	}
-	wait10Msec(100);
+        hasbeeninit= -1;//keeps from initializing more than once
+        writeDebugStreamLine("STATE:%i",SwitchState);//reports switch information
+        writeDebugStreamLine("initialization complete");
+    }
+    wait10Msec(100);
 //determine target for PID
-	float Range=22.5;//mechanical rotations of the motor shaft to extend full length of lift
-	float Stages=4;//number of stages
-	float ppr= 1120;//pulse per revolution for the andymark motor
-	float PhysicalHeight =22;//bottom of manipulator in cm
-	float ENCcm =round((Range *ppr)/115); //en per cm
-	float nTarget=(nStage/Stages)*(Range *ppr);
-	//loop until within tolerance.
-	while(abs(nTarget-nMotorEncoder[Lift])>Tolerance+5)//--TEST added 5 becuase Tolerance to low?
-	{
-		writeDebugStreamLine("Target:%i, status:%i",nTarget, nMotorEncoder[Lift]);
-		motor[Lift]=PID(nTarget,nMotorEncoder[Lift]);
-	}
-	motor[Lift]=0;
+    float Range=22.5;//mechanical rotations of the motor shaft to extend full length of lift
+    float Stages=4;//number of stages
+    float ppr= 1120;//pulse per revolution for the andymark motor
+    float PhysicalHeight =22;//bottom of manipulator in cm
+    float ENCcm =round((Range *ppr)/115); //en per cm
+    float nTarget=(nStage/Stages)*(Range *ppr);
+    //loop until within tolerance.
+    while(abs(nTarget-nMotorEncoder[Lift])>Tolerance+5)//--TEST added 5 becuase Tolerance to low?
+    {
+        writeDebugStreamLine("Target:%i, status:%i",nTarget, nMotorEncoder[Lift]);
+        motor[Lift]=PID(nTarget,nMotorEncoder[Lift]);
+    }
+    motor[Lift]=0;
 
 
-	//************************************LOGIC-TEST************************************//
-	//int SIM =0;
-	//while(abs(nTarget-SIM)>Tolerance)
-	//{
-	//	writeDebugStreamLine("Target:%i, status:%i",nTarget, SIM);
-	//	motor[Lift]=PID(nTarget,SIM);
-	//	SIM++;
-	//	SIM++;
-	//	wait1Msec(2);
-	//	clearDebugStream();
-	//}
-	//motor[Lift]=0;
-	//*********************************************************************************//
-	return;
+    //************************************LOGIC-TEST************************************//
+    //int SIM =0;
+    //while(abs(nTarget-SIM)>Tolerance)
+    //{
+    //	writeDebugStreamLine("Target:%i, status:%i",nTarget, SIM);
+    //	motor[Lift]=PID(nTarget,SIM);
+    //	SIM++;
+    //	SIM++;
+    //	wait1Msec(2);
+    //	clearDebugStream();
+    //}
+    //motor[Lift]=0;
+    //*********************************************************************************//
+    return;
 }
 
 void Setspeed(int nspeed)
 {
-	motor[Right]=nspeed;
-	motor[Left]=nspeed;
+    motor[Right]=nspeed;
+    motor[Left]=nspeed;
 }
 void SetSpeed(int nLeftSpeed,int nRightSpeed)
 {
-	motor[Left]=nLeftSpeed;
-	motor[Right]=nRightSpeed;
+    motor[Left]=nLeftSpeed;
+    motor[Right]=nRightSpeed;
 }
 void Drive(int distance, int power)
 {
-	int C=2*(PI)*2;
-	int Target= (1120/C)*distance;//en/in
-	int Proximity= 1100;
-	int Duration=5;
-	int Lspeed=0;
-	int Rspeed=0;
-	nMotorEncoder[Right]=0;
-	nMotorEncoder[Left]=0;
-while(nMotorEncoder[Right]!=Target || nMotorEncoder[Left]!=Target)
-	{
-	int Lenc nMotorEncoder[Left];
-	int Renc nMotorEncoder[Right];
-	CurrDistance=Target-((nMotorEncoder[Right]+nMotorEncoder[Left])/2)
-	//Difference= ( MAX(Lenc, Renc) - MIN(Lenc, Renc) );
-		if(CurrDistance<Target)
-		{
-			// speed up until positive limit "power" reached
-			if(Lenc>Renc)//turn left
-			{
-				Lspeed-1;
-				Rspeed+1;
-			}
-			else if(Lenc<Renc)//turn right
-			{
-				Lspeed+1;
-				Lspeed-1;
-			}
-			else if(Lspeed==Rspeed && (Lspeed+Rspeed)/2)<power ) //speed up
-			{
-				Lspeed+1;
-				Rspeed+1;
-			}
-			else{}
-		}
-		if(CurrDistance>Target)//slow down until backing up
-		{
-			if (((Lspeed+Rspeed)/2)> (-1*power))// slowdown/ reverse until full speed backwards
-			{
-			Lspeed-1;
-			Rspeed-1;
-			}
-			if(Lenc>Renc)//turn Right
-			{
-				Lspeed+1;
-				Rspeed-1;
-			}
-			else if(Lenc<Renc)//turn left
-			{
-				Lspeed-1;
-				Lspeed+1;
-			}
-			else//do nothing
-			{}
-		}
-	Setspeed(Lspeed,Rspeed);
-	wait1Msec(Duration);
-	}
+    int C=2*(PI)*2;
+    int Target= (1120/C)*distance;//en/in
+    int Proximity= 1100;
+    int Duration=5;
+    int Lspeed=0;
+    int Rspeed=0;
+    nMotorEncoder[Right]=0;
+    nMotorEncoder[Left]=0;
+    while(nMotorEncoder[Right]!=Target || nMotorEncoder[Left]!=Target)
+    {
+        int Lenc nMotorEncoder[Left];
+        int Renc nMotorEncoder[Right];
+        CurrDistance=Target-((nMotorEncoder[Right]+nMotorEncoder[Left])/2)
+                     //Difference= ( MAX(Lenc, Renc) - MIN(Lenc, Renc) );
+                     if(CurrDistance<Target)
+        {
+            // speed up until positive limit "power" reached
+            if(Lenc>Renc)//turn left
+            {
+                Lspeed-1;
+                Rspeed+1;
+            }
+            else if(Lenc<Renc)//turn right
+            {
+                Lspeed+1;
+                Lspeed-1;
+            }
+            else if(Lspeed==Rspeed && (Lspeed+Rspeed)/2)<power ) //speed up
+            {
+                Lspeed+1;
+                Rspeed+1;
+            }
+            else {}
+        }
+        if(CurrDistance>Target)//slow down until backing up
+        {
+            if (((Lspeed+Rspeed)/2)> (-1*power))// slowdown/ reverse until full speed backwards
+            {
+                Lspeed-1;
+                Rspeed-1;
+            }
+            if(Lenc>Renc)//turn Right
+            {
+                Lspeed+1;
+                Rspeed-1;
+            }
+            else if(Lenc<Renc)//turn left
+            {
+                Lspeed-1;
+                Lspeed+1;
+            }
+            else//do nothing
+            {}
+        }
+        Setspeed(Lspeed,Rspeed);
+        wait1Msec(Duration);
+    }
 }
 
 void Turn(int Angle)//clockwise is negitive
 {
 
-	float circumfrence = 2*(PI)*2;
-	int ppr = 1120;
-	int enc_in=ppr/circumfrence;//result
+    float circumfrence = 2*(PI)*2;
+    int ppr = 1120;
+    int enc_in=ppr/circumfrence;//result
 
-	float WheelbaseRadius = 7.3875;
-	float ArcLength=degreesToRadians(Angle)*WheelbaseRadius;//result
+    float WheelbaseRadius = 7.3875;
+    float ArcLength=degreesToRadians(Angle)*WheelbaseRadius;//result
 
-	int Target= round(ArcLength*enc_in);//goal
+    int Target= round(ArcLength*enc_in);//goal
 
-	writeDebugStreamLine("Target:%i",Target);
-  nMotorEncoder[motorE]=0;
-  nMotorEncoder[motorD]=0;
-  //1/2 rot= 45deg = 1120enc
-	if(Angle<1)
-	{
-	//left
-		while(nMotorEncoder[motorE]>= Target)
-		{
-		motor[Right]=100;
-		motor[Left]=-100;
-		}
-		motor[Right]=0;
-		motor[Left]=0;
-	}
-	else if(Angle>1)
-	{
-	//right
-		while(nMotorEncoder[motorE]<= Target)
-		{
-		motor[Right]=-100;
-		motor[Left]=100;
-		}
-		motor[Right]=0;
-		motor[Left]=0;
-	}
+    writeDebugStreamLine("Target:%i",Target);
+    nMotorEncoder[motorE]=0;
+    nMotorEncoder[motorD]=0;
+    //1/2 rot= 45deg = 1120enc
+    if(Angle<1)
+    {
+        //left
+        while(nMotorEncoder[motorE]>= Target)
+        {
+            motor[Right]=100;
+            motor[Left]=-100;
+        }
+        motor[Right]=0;
+        motor[Left]=0;
+    }
+    else if(Angle>1)
+    {
+        //right
+        while(nMotorEncoder[motorE]<= Target)
+        {
+            motor[Right]=-100;
+            motor[Left]=100;
+        }
+        motor[Right]=0;
+        motor[Left]=0;
+    }
 }
 void BumpConveyor()
 {
-motor[Conveyor]=20;
-wait10Msec(100);
-motor[Conveyor]=0;
-wait10Msec(50);
-motor[Conveyor]=30;
-wait10Msec(0.75);
-motor[Conveyor]=0;
+    motor[Conveyor]=20;
+    wait10Msec(100);
+    motor[Conveyor]=0;
+    wait10Msec(50);
+    motor[Conveyor]=30;
+    wait10Msec(0.75);
+    motor[Conveyor]=0;
 }
 
 void Test()
 {
-  float nFeedBack=((23000/1120.0)/22.5)*100;
-  writeDebugStreamLine("Status:%f",nFeedBack);
+    float nFeedBack=((23000/1120.0)/22.5)*100;
+    writeDebugStreamLine("Status:%f",nFeedBack);
 }

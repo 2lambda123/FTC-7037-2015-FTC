@@ -44,128 +44,128 @@ void BumpConveyor();
 void Test();
 task main()
 {
-	startTask(printf);
-	getUserInput();
-	initializeRobot();
-	//Test();
-	waitForStart();
-	locateInfaRedBeacon();//determins GoalPosition
+    startTask(printf);
+    getUserInput();
+    initializeRobot();
+    //Test();
+    waitForStart();
+    locateInfaRedBeacon();//determins GoalPosition
 }
 
 task printf()
 {
-	while(true)
-	{
-	clearDebugStream();
-	writeDebugStreamLine("startPosition: %s", startPosition);
-	writeDebugStreamLine("GoalPosition: %i", GoalPosition);
-	delay(100);
-	clearDebugStream();
-	}
+    while(true)
+    {
+        clearDebugStream();
+        writeDebugStreamLine("startPosition: %s", startPosition);
+        writeDebugStreamLine("GoalPosition: %i", GoalPosition);
+        delay(100);
+        clearDebugStream();
+    }
 }
 void initializeRobot()
 {
-	servo[Gripper]=80;
-	servo[lock]=127;
+    servo[Gripper]=80;
+    servo[lock]=127;
 }
 void getUserInput()
 {
-  nxtDisplayCenteredTextLine(1, "FLOOR or RAMP?");
-  nxtDisplayCenteredTextLine(7, "FLOOR RAMP");
-  while(true)
-  {
-    if(nNxtButtonPressed == 2)
+    nxtDisplayCenteredTextLine(1, "FLOOR or RAMP?");
+    nxtDisplayCenteredTextLine(7, "FLOOR RAMP");
+    while(true)
     {
-      startPosition = START_FLOOR;
-      nxtDisplayCenteredTextLine(1, "FLOOR");
-      nxtDisplayCenteredTextLine(7, "");
-      break;
+        if(nNxtButtonPressed == 2)
+        {
+            startPosition = START_FLOOR;
+            nxtDisplayCenteredTextLine(1, "FLOOR");
+            nxtDisplayCenteredTextLine(7, "");
+            break;
+        }
+        else if(nNxtButtonPressed == 1)
+        {
+            startPosition = START_RAMP;
+            nxtDisplayCenteredTextLine(1, "RAMP");
+            nxtDisplayCenteredTextLine(7, "");
+            break;
+        }
     }
-    else if(nNxtButtonPressed == 1)
-    {
-      startPosition = START_RAMP;
-      nxtDisplayCenteredTextLine(1, "RAMP");
-      nxtDisplayCenteredTextLine(7, "");
-      break;
-    }
-  }
-  playSound(soundFastUpwardTones);
-  wait10Msec(200);
-  //bDisplayDiagnostics = false;
-	nxtDisplayCenteredTextLine(0, "%s", startPosition);
+    playSound(soundFastUpwardTones);
+    wait10Msec(200);
+    //bDisplayDiagnostics = false;
+    nxtDisplayCenteredTextLine(0, "%s", startPosition);
 }
 
 void Routine1()
 {
-	if(startPosition==START_RAMP)
-	{
+    if(startPosition==START_RAMP)
+    {
 
-	return;
-	}
-	else if(startPosition==START_FLOOR)
-	{
-	return;
-	}
+        return;
+    }
+    else if(startPosition==START_FLOOR)
+    {
+        return;
+    }
 }
 
 
 void Routine2()
 {
-	if(startPosition==START_RAMP)
-	{
+    if(startPosition==START_RAMP)
+    {
 
-	return;
-	}
-	else if(startPosition==START_FLOOR)
-	{
-	return;
-	}
+        return;
+    }
+    else if(startPosition==START_FLOOR)
+    {
+        return;
+    }
 }
 
 
 void Routine3()
 {
-	if(startPosition==START_RAMP)
-	{
+    if(startPosition==START_RAMP)
+    {
 
-	return;
-	}
-	else if(startPosition==START_FLOOR)
-	{
-	return;
-	}
+        return;
+    }
+    else if(startPosition==START_FLOOR)
+    {
+        return;
+    }
 }
 
 void RoutineERR()
 {
-	if(startPosition==START_RAMP)
-	{
+    if(startPosition==START_RAMP)
+    {
 
-	return;
-	}
-	else if(startPosition==START_FLOOR)
-	{
-	return;
-	}
+        return;
+    }
+    else if(startPosition==START_FLOOR)
+    {
+        return;
+    }
 }
 void locateInfaRedBeacon()
 {
 //determine start Position(FLOOR=FLOOR, RAMP = ramp)
-	if(startPosition == START_FLOOR)
-	{
-	//drive out of start Position and into GoalPosition_1
-	}
-	else if(startPosition == START_RAMP)
-	{
-	//drive out of start Position and into GoalPosition_1
-	}
+    if(startPosition == START_FLOOR)
+    {
+        //drive out of start Position and into GoalPosition_1
+    }
+    else if(startPosition == START_RAMP)
+    {
+        //drive out of start Position and into GoalPosition_1
+    }
 
 //if IR at GoalPosition 1 SET(int GoalPosition =1)and return;
-	if(SensorValue[IRLeft]==5)
-	{
-	GoalPosition=1;
-	return;
-	}
+    if(SensorValue[IRLeft]==5)
+    {
+        GoalPosition=1;
+        return;
+    }
 //else drive out of GoalPosition1 and into GoalPosition_2
 
 
@@ -178,135 +178,135 @@ void locateInfaRedBeacon()
 
 void RunLift(float nStage)
 {
- float Range=22.5;//mechanical rotations of the motor shaft to extend full length of lift
- float Stages=4;//number of stages
- float ppr= 1120;//pulse per revolution for the andymark motor
- float nTarget=(nStage/Stages)*(Range *ppr);
- float nFeedBack=(nMotorEncoder[Lift]/1120)/22.5*100;
- writeDebugStreamLine("Target: %f, nStage: %i", nTarget,nStage);//nStage is reading but nTarget is still 0???
- while(true)
- {
- // get last lift status
-  float nStatus=(nMotorEncoder[Lift]/1120.0)/22.5*100.0;
-  float mTarget=(((nStage/Stages)*(Range*ppr))/1120/22.5)*100;
-  //should status change(how much)?
-  if(mTarget<nStatus)
-  {
-  	while(nTarget<nStatus)
-  	{
-  		motor[Lift]=-100;
-  	}
-  }
-  else if(mTarget>nStatus)
-  {
-  	while(mTarget>nStatus)
-  	{
-  		motor[Lift]=100;
-  	}
-  }
-  //are we there yet? if(Target>position) move towards target else{stop and break;}
- }
+    float Range=22.5;//mechanical rotations of the motor shaft to extend full length of lift
+    float Stages=4;//number of stages
+    float ppr= 1120;//pulse per revolution for the andymark motor
+    float nTarget=(nStage/Stages)*(Range *ppr);
+    float nFeedBack=(nMotorEncoder[Lift]/1120)/22.5*100;
+    writeDebugStreamLine("Target: %f, nStage: %i", nTarget,nStage);//nStage is reading but nTarget is still 0???
+    while(true)
+    {
+// get last lift status
+        float nStatus=(nMotorEncoder[Lift]/1120.0)/22.5*100.0;
+        float mTarget=(((nStage/Stages)*(Range*ppr))/1120/22.5)*100;
+        //should status change(how much)?
+        if(mTarget<nStatus)
+        {
+            while(nTarget<nStatus)
+            {
+                motor[Lift]=-100;
+            }
+        }
+        else if(mTarget>nStatus)
+        {
+            while(mTarget>nStatus)
+            {
+                motor[Lift]=100;
+            }
+        }
+        //are we there yet? if(Target>position) move towards target else{stop and break;}
+    }
 
- if(nTarget>1)//run up
- {
-		while(nMotorEncoder[Lift]<=nTarget)
-		{
-		float nFeedBack=(nMotorEncoder[Lift]/1120)/22.5;
-		writeDebugStreamLine("Value :%f Target: %f, Location: %f", nMotorEncoder[Lift], nTarget, nFeedBack);
-		motor[Lift]=75;
-		}
-		float nFeedBack=(nMotorEncoder[Lift]/1120)/22.5;
-		writeDebugStreamLine("Value :%f Target: %f, Location: %f", nMotorEncoder[Lift], nTarget, nFeedBack);
-		motor[Lift]=0;
-	}
-	if(nTarget<1)//run down
-	{
-		while(nMotorEncoder[Lift]>=nTarget)//if switch is pressed break...
-		{
-		writeDebugStreamLine("Value :%i, Target: %i", nMotorEncoder[Lift], nTarget);
-		motor[Lift]=-75;
-		}
-		motor[Lift]=0;
-	}
+    if(nTarget>1)//run up
+    {
+        while(nMotorEncoder[Lift]<=nTarget)
+        {
+            float nFeedBack=(nMotorEncoder[Lift]/1120)/22.5;
+            writeDebugStreamLine("Value :%f Target: %f, Location: %f", nMotorEncoder[Lift], nTarget, nFeedBack);
+            motor[Lift]=75;
+        }
+        float nFeedBack=(nMotorEncoder[Lift]/1120)/22.5;
+        writeDebugStreamLine("Value :%f Target: %f, Location: %f", nMotorEncoder[Lift], nTarget, nFeedBack);
+        motor[Lift]=0;
+    }
+    if(nTarget<1)//run down
+    {
+        while(nMotorEncoder[Lift]>=nTarget)//if switch is pressed break...
+        {
+            writeDebugStreamLine("Value :%i, Target: %i", nMotorEncoder[Lift], nTarget);
+            motor[Lift]=-75;
+        }
+        motor[Lift]=0;
+    }
 }
 
 void Drive(int distance)
 {
-	int C=2*(PI)*2;
-	int Target= (1120/C)*distance;//en/in
-	nMotorEncoder[motorE]=0;
-	if(distance>1)
-	{
-		while(nMotorEncoder[motorE]<=Target)
-		{
-		writeDebugStreamLine("Value :%i, Target: %i",nMotorEncoder[motorE], Target);
-		}
-		motor[motorD]=0;
-		motor[motorE]=0;
-	}
-	else if(distance<1)
-	{
-		while(nMotorEncoder[motorE]>=Target)
-		{
-		writeDebugStreamLine("Value :%i, Target: %i",nMotorEncoder[motorE], Target);
-		motor[motorD]=-75;
-		motor[motorE]=-75;
-		}
-		motor[motorD]=0;
-		motor[motorE]=0;
-	}
+    int C=2*(PI)*2;
+    int Target= (1120/C)*distance;//en/in
+    nMotorEncoder[motorE]=0;
+    if(distance>1)
+    {
+        while(nMotorEncoder[motorE]<=Target)
+        {
+            writeDebugStreamLine("Value :%i, Target: %i",nMotorEncoder[motorE], Target);
+        }
+        motor[motorD]=0;
+        motor[motorE]=0;
+    }
+    else if(distance<1)
+    {
+        while(nMotorEncoder[motorE]>=Target)
+        {
+            writeDebugStreamLine("Value :%i, Target: %i",nMotorEncoder[motorE], Target);
+            motor[motorD]=-75;
+            motor[motorE]=-75;
+        }
+        motor[motorD]=0;
+        motor[motorE]=0;
+    }
 }
 void Turn(int Angle)//clockwise is negitive
 {
 
-	float circumfrence = 2*(PI)*2;
-	int ppr = 1120;
-	int enc_in=ppr/circumfrence;//result
+    float circumfrence = 2*(PI)*2;
+    int ppr = 1120;
+    int enc_in=ppr/circumfrence;//result
 
-	float WheelbaseRadius = 7.3875;
-	float ArcLength=degreesToRadians(Angle)*WheelbaseRadius;//result
+    float WheelbaseRadius = 7.3875;
+    float ArcLength=degreesToRadians(Angle)*WheelbaseRadius;//result
 
-	int Target= round(ArcLength*enc_in);//goal
+    int Target= round(ArcLength*enc_in);//goal
 
-	writeDebugStreamLine("Target:%i",Target);
-  nMotorEncoder[motorE]=0;
-  nMotorEncoder[motorD]=0;
-  //1/2 rot= 45deg = 1120enc
-	if(Angle<1)
-	{
-	//left
-		while(nMotorEncoder[motorE]>= Target)
-		{
-		motor[Right]=100;
-		motor[Left]=-100;
-		}
-		motor[Right]=0;
-		motor[Left]=0;
-	}
-	else if(Angle>1)
-	{
-	//right
-		while(nMotorEncoder[motorE]<= Target)
-		{
-		motor[Right]=-100;
-		motor[Left]=100;
-		}
-		motor[Right]=0;
-		motor[Left]=0;
-	}
+    writeDebugStreamLine("Target:%i",Target);
+    nMotorEncoder[motorE]=0;
+    nMotorEncoder[motorD]=0;
+    //1/2 rot= 45deg = 1120enc
+    if(Angle<1)
+    {
+        //left
+        while(nMotorEncoder[motorE]>= Target)
+        {
+            motor[Right]=100;
+            motor[Left]=-100;
+        }
+        motor[Right]=0;
+        motor[Left]=0;
+    }
+    else if(Angle>1)
+    {
+        //right
+        while(nMotorEncoder[motorE]<= Target)
+        {
+            motor[Right]=-100;
+            motor[Left]=100;
+        }
+        motor[Right]=0;
+        motor[Left]=0;
+    }
 }
 void BumpConveyor()
 {
-motor[Conveyor]=75;
-wait10Msec(100);
-motor[Conveyor]=0;
-wait10Msec(50);
-motor[Conveyor]=75;
-wait10Msec(0.75);
-motor[Conveyor]=0;
+    motor[Conveyor]=75;
+    wait10Msec(100);
+    motor[Conveyor]=0;
+    wait10Msec(50);
+    motor[Conveyor]=75;
+    wait10Msec(0.75);
+    motor[Conveyor]=0;
 }
 void Test()
 {
-  float nFeedBack=((23000/1120.0)/22.5)*100;
-  writeDebugStreamLine("Status:%f",nFeedBack);
+    float nFeedBack=((23000/1120.0)/22.5)*100;
+    writeDebugStreamLine("Status:%f",nFeedBack);
 }

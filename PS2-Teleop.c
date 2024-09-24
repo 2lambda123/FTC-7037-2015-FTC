@@ -34,8 +34,8 @@
 const ubyte Addr = 0x02;
 void initializeRobot()
 {
-	servo[Gripper]=0;
-  return;
+    servo[Gripper]=0;
+    return;
 }
 
 
@@ -69,182 +69,182 @@ void initializeRobot()
 task main()
 {
 
-  initializeRobot();
- // waitForStart();   // wait for start of tele-op phase
-   psp cuRrState;
-   bool smartOverride=false;
-   bool pressed=false;
-	nI2CBytesReady[PSPNX] = 0;
-	PlaySound(soundUpwardTones);//confirm initialization;
-	int threshold = 14;
-  while (true)
-  {
-  	  	//register new inputs
-  	PSP_ReadButtonState(PSPNX, Addr, cuRrState);//instantiate new controller "class"
-		bool joy1Btn_1								= !(char)cuRrState.square;//hood down
-		bool joy1Btn_2								= !(char)cuRrState.cross; //lift down
-		bool joy1Btn_3								= !(char)cuRrState.circle;//lift up
-		bool joy1Btn_4								= !(char)cuRrState.triang;//hood up
-		bool joy1Btn_5								= !(char)cuRrState.d;			//unused
-		bool joy1Btn_6								= !(char)cuRrState.c;			//unused
-		bool joy1Btn_7								= !(char)cuRrState.b;			//unused
-		bool joy1Btn_8								= !(char)cuRrState.a;			//unused
-		bool joy1Btn_9								= !(char)cuRrState.l1;		//manip up
-		bool joy1Btn_10								= !(char)cuRrState.r1;		//intake in
-		bool joy1Btn_11								= !(char)cuRrState.l2;		//manip down
-		bool joy1Btn_12								= !(char)cuRrState.r2;		//intake out
-		bool joy1Btn_13								= !(char)cuRrState.l_j_b; //unused
-		bool joy1Btn_14								= !(char)cuRrState.r_j_b; //unused
-		int joystick_joy1_x1					= (int)cuRrState.l_j_x;		//unused(-100)-(100)
-		int joystick_joy1_y1					= (int)cuRrState.l_j_y;		//left motor(-100)-(100)
-		int joystick_joy1_x2					= (int)cuRrState.r_j_x;		//unused(-100)-(100
-		int joystick_joy1_y2					= (int)cuRrState.r_j_y;		//right motor(-100)-(100)
-  //create output logic(physical actuation)
-	//choose Mode
-					if(joy1Btn_7) { // when we press the switch for the first time,
-				if(!pressed) { // set as pressed
-					if(smartOverride==true) { // when we press it again, it gets turned off
-						smartOverride=false;
-					} else {
-						smartOverride =true;
-					}
-				}
-				pressed = true; // keeping track of pressed allows the button to be
-			} else { // held down
-			pressed = false;
-			}
-		//!Kid Mode!
-			if(smartOverride==false)
-			{
-			 	//+drivetrain
-					if(abs(joystick_joy1_y1)>threshold)
-					{
-					motor[Left]=joystick_joy1_y1;
-					writeDebugStreamLine("Y1: %i", joystick_joy1_y1);
-					}
-					else
-					{
-					motor[Left]=0;
-					}
-					if(abs(joystick_joy1_y2)>threshold)
-					{
-					writeDebugStreamLine("Y2: %i", joystick_joy1_y2);
-					motor[Right]=joystick_joy1_y2;
-					}
-					else
-					{
-					motor[Right]=0;
-					}
-			}
-		//APO
-		if(smartOverride==true)
-		{
-	  //driver 1
-	  	//+drivetrain
-			if(abs(joystick_joy1_y1)>threshold)
-			{
-			motor[Left]=joystick_joy1_y1;
-			writeDebugStreamLine("Y1: %i", joystick_joy1_y1);
-			}
-			else
-			{
-			motor[Left]=0;
-			}
-			if(abs(joystick_joy1_y2)>threshold)
-			{
-			writeDebugStreamLine("Y2: %i", joystick_joy1_y2);
-			motor[Right]=joystick_joy1_y2;
-			}
-			else
-			{
-			motor[Right]=0;
-			}
-			//Gripper-NC hold to open
-			//if(joy1Btn(8))
-			//{
-			//writeDebugStreamLine("joy1Btn(8): %i", joy1Btn(8));
-			//servo[Gripper]=245;
-			//}
-			//else
-			//{
-			//servo[Gripper]=0;
-			//}
-			////lock
-			//if(joy1Btn(5))
-			//{
-			//	servo[lock]=0;
-			//}
-			//else if(joy1Btn(7))
-			//{
-			//servo[lock]=255;
-			//}
-			//else
-			//{
-			//servo[lock]=127;
-			//}
-	// driver 2
-			//intake- right trigger set
-			if(joy1Btn_12)
-			{
-		//	writeDebugStreamLine("joy1Btn(6): %i", joy1Btn(6));
-			motor[Intake]=80;
-			}
-			else if(joy1Btn_10)
-			{
-		//	writeDebugStreamLine("joy1Btn(8): %i", joy1Btn(8));
-			motor[Intake]=-80;
-			}
-			else
-			{
-			motor[Intake]=0;
-			}
-			//Conveyor - left trigger set
-			if(joy1Btn_9)
-			{
-		//	writeDebugStreamLine("joy1Btn(5): %i", joy1Btn(5));
-			motor[Conveyor]=75;
-			}
-			else if(joy1Btn_11)
-			{
-		//	writeDebugStreamLine("joy1Btn(7): %i", joy1Btn(7));
-			motor[Conveyor]=-75;
-			}
-			else
-			{
-			motor[Conveyor]=0;
-			}
-			//lift--3 up 2 down
-			if(joy1Btn_3)
-			{
-		//		writeDebugStreamLine("joy1Btn(3): %i", joy1Btn(3));
-			motor[Lift]=100;
-			}
-			else if(joy1Btn_2)
-			{
-		//	writeDebugStreamLine("joy1Btn(2): %i", joy1Btn(2));
-			motor[Lift]=-100;
-			}
-			else
-			{
-				motor[Lift]=0;
-			}
-			//hood-- 1 down 4 up
-			if(joy1Btn_1)
-			{
-		//		writeDebugStreamLine("joy1Btn(1): %i", joy1Btn(1));
-				motor[Hood]=30;
-			}
-			else if(joy1Btn_4)
-			{
-			//	writeDebugStreamLine("joy1Btn(4): %i", joy1Btn(4));
-				motor[Hood]=-30;
-			}
-			else
-			{
+    initializeRobot();
+// waitForStart();   // wait for start of tele-op phase
+    psp cuRrState;
+    bool smartOverride=false;
+    bool pressed=false;
+    nI2CBytesReady[PSPNX] = 0;
+    PlaySound(soundUpwardTones);//confirm initialization;
+    int threshold = 14;
+    while (true)
+    {
+        //register new inputs
+        PSP_ReadButtonState(PSPNX, Addr, cuRrState);//instantiate new controller "class"
+        bool joy1Btn_1								= !(char)cuRrState.square;//hood down
+        bool joy1Btn_2								= !(char)cuRrState.cross; //lift down
+        bool joy1Btn_3								= !(char)cuRrState.circle;//lift up
+        bool joy1Btn_4								= !(char)cuRrState.triang;//hood up
+        bool joy1Btn_5								= !(char)cuRrState.d;			//unused
+        bool joy1Btn_6								= !(char)cuRrState.c;			//unused
+        bool joy1Btn_7								= !(char)cuRrState.b;			//unused
+        bool joy1Btn_8								= !(char)cuRrState.a;			//unused
+        bool joy1Btn_9								= !(char)cuRrState.l1;		//manip up
+        bool joy1Btn_10								= !(char)cuRrState.r1;		//intake in
+        bool joy1Btn_11								= !(char)cuRrState.l2;		//manip down
+        bool joy1Btn_12								= !(char)cuRrState.r2;		//intake out
+        bool joy1Btn_13								= !(char)cuRrState.l_j_b; //unused
+        bool joy1Btn_14								= !(char)cuRrState.r_j_b; //unused
+        int joystick_joy1_x1					= (int)cuRrState.l_j_x;		//unused(-100)-(100)
+        int joystick_joy1_y1					= (int)cuRrState.l_j_y;		//left motor(-100)-(100)
+        int joystick_joy1_x2					= (int)cuRrState.r_j_x;		//unused(-100)-(100
+        int joystick_joy1_y2					= (int)cuRrState.r_j_y;		//right motor(-100)-(100)
+        //create output logic(physical actuation)
+        //choose Mode
+        if(joy1Btn_7) { // when we press the switch for the first time,
+            if(!pressed) { // set as pressed
+                if(smartOverride==true) { // when we press it again, it gets turned off
+                    smartOverride=false;
+                } else {
+                    smartOverride =true;
+                }
+            }
+            pressed = true; // keeping track of pressed allows the button to be
+        } else { // held down
+            pressed = false;
+        }
+        //!Kid Mode!
+        if(smartOverride==false)
+        {
+            //+drivetrain
+            if(abs(joystick_joy1_y1)>threshold)
+            {
+                motor[Left]=joystick_joy1_y1;
+                writeDebugStreamLine("Y1: %i", joystick_joy1_y1);
+            }
+            else
+            {
+                motor[Left]=0;
+            }
+            if(abs(joystick_joy1_y2)>threshold)
+            {
+                writeDebugStreamLine("Y2: %i", joystick_joy1_y2);
+                motor[Right]=joystick_joy1_y2;
+            }
+            else
+            {
+                motor[Right]=0;
+            }
+        }
+        //APO
+        if(smartOverride==true)
+        {
+            //driver 1
+            //+drivetrain
+            if(abs(joystick_joy1_y1)>threshold)
+            {
+                motor[Left]=joystick_joy1_y1;
+                writeDebugStreamLine("Y1: %i", joystick_joy1_y1);
+            }
+            else
+            {
+                motor[Left]=0;
+            }
+            if(abs(joystick_joy1_y2)>threshold)
+            {
+                writeDebugStreamLine("Y2: %i", joystick_joy1_y2);
+                motor[Right]=joystick_joy1_y2;
+            }
+            else
+            {
+                motor[Right]=0;
+            }
+            //Gripper-NC hold to open
+            //if(joy1Btn(8))
+            //{
+            //writeDebugStreamLine("joy1Btn(8): %i", joy1Btn(8));
+            //servo[Gripper]=245;
+            //}
+            //else
+            //{
+            //servo[Gripper]=0;
+            //}
+            ////lock
+            //if(joy1Btn(5))
+            //{
+            //	servo[lock]=0;
+            //}
+            //else if(joy1Btn(7))
+            //{
+            //servo[lock]=255;
+            //}
+            //else
+            //{
+            //servo[lock]=127;
+            //}
+            // driver 2
+            //intake- right trigger set
+            if(joy1Btn_12)
+            {
+                //	writeDebugStreamLine("joy1Btn(6): %i", joy1Btn(6));
+                motor[Intake]=80;
+            }
+            else if(joy1Btn_10)
+            {
+                //	writeDebugStreamLine("joy1Btn(8): %i", joy1Btn(8));
+                motor[Intake]=-80;
+            }
+            else
+            {
+                motor[Intake]=0;
+            }
+            //Conveyor - left trigger set
+            if(joy1Btn_9)
+            {
+                //	writeDebugStreamLine("joy1Btn(5): %i", joy1Btn(5));
+                motor[Conveyor]=75;
+            }
+            else if(joy1Btn_11)
+            {
+                //	writeDebugStreamLine("joy1Btn(7): %i", joy1Btn(7));
+                motor[Conveyor]=-75;
+            }
+            else
+            {
+                motor[Conveyor]=0;
+            }
+            //lift--3 up 2 down
+            if(joy1Btn_3)
+            {
+                //		writeDebugStreamLine("joy1Btn(3): %i", joy1Btn(3));
+                motor[Lift]=100;
+            }
+            else if(joy1Btn_2)
+            {
+                //	writeDebugStreamLine("joy1Btn(2): %i", joy1Btn(2));
+                motor[Lift]=-100;
+            }
+            else
+            {
+                motor[Lift]=0;
+            }
+            //hood-- 1 down 4 up
+            if(joy1Btn_1)
+            {
+                //		writeDebugStreamLine("joy1Btn(1): %i", joy1Btn(1));
+                motor[Hood]=30;
+            }
+            else if(joy1Btn_4)
+            {
+                //	writeDebugStreamLine("joy1Btn(4): %i", joy1Btn(4));
+                motor[Hood]=-30;
+            }
+            else
+            {
 
-				motor[Hood]=0;
-			}
-			clearDebugStream();
-		}
-	}
+                motor[Hood]=0;
+            }
+            clearDebugStream();
+        }
+    }
 }
